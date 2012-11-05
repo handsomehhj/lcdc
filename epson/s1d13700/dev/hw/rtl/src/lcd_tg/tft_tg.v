@@ -108,10 +108,10 @@ module tft_tg (
 //      Logic description
 //==========================================================================
   assign reg_vsync[8:0] = (reg_tcr[7:0] == 8'h34)? 9'h129 : 
-                          (reg_tcr[7:0] == 8'h48)? 9'h148 : 9'h148;
+                          (reg_tcr[7:0] == 8'h48)? 9'h148 : 9'h13a;
 
   assign reg_hsync[9:0] = (reg_tcr[7:0] == 8'h34)? 10'h198 :
-                          (reg_tcr[7:0] == 8'h48)? 10'h1ff : 10'h1ff;
+                          (reg_tcr[7:0] == 8'h48)? 10'h1ff : 10'h20f;
 
 
 

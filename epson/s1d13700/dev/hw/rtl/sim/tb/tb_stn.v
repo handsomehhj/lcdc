@@ -143,7 +143,7 @@ module stn (
   end
   
 // ----- HSYNC counter --------------------------------------------------
-  assign hdp_start[7:0] = (reg_tcr[7:0] - 8'h28 + 8'h01) * 2;
+  assign hdp_start[7:0] = (reg_tcr[7:0] - 8'h30 + 8'h01) * 2;
   assign hdp_end[7:0]   = (reg_tcr[7:0] * 2) + 8'h01;
 
   assign hcnt_en  = pcnt_en & pcnt_ov;

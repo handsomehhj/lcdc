@@ -51,10 +51,19 @@ module stn_td (
 //==========================================================================
 //     Wires & Regs
 //==========================================================================
+  wire        fpline_rst_en;
   wire        fpdat_latch_en;
-  
+  wire        stn_hcnt_en;
+
+
+  wire        stn_hcnt_start;
+  wire        stn_hcnt_end;
+  wire        stn_hdp;
+
+  reg  [6:0]  stn_hcnt_r;
+
   reg  [1:0]  stn_fpshift_r;
-  reg         stn_fpline_r;
+  reg  [1:0]  stn_fpline_r;
   reg         latch_cnt_r;
 
   reg         wrreq_r;
@@ -63,6 +72,8 @@ module stn_td (
 
   reg         stn_tst_r;
 
+
+
 //==========================================================================
 //      Logic description
 //==========================================================================
@@ -70,23 +81,26 @@ module stn_td (
 // ----- Sync STN panel signals -----------------------------------------
   always @(posedge clk or negedge rst_x) begin
     if (rst_x == 1'b0) begin
-      stn_fpline_r       <= 1'b0;
+      stn_fpline_r[1:0]  <= 2'b00;
       stn_fpshift_r[1:0] <= 2'b00;
     end
     else begin
-      stn_fpline_r       <= stn_fpline;    
+      stn_fpline_r[1:0]  <= {stn_fpline_r[0], stn_fpline};    
       stn_fpshift_r[1:0] <= {stn_fpshift_r[0], stn_fpshift};
     end
   end
 
+  assign fpline_rst_en  = stn_fpline_r[1]  & (~stn_fpline_r[0]);
   assign fpdat_latch_en = stn_fpshift_r[1] & (~stn_fpshift_r[0]);
+  assign stn_hcnt_en    = stn_fpshift_r[0] & (~stn_fpshift_r[1]);
+
 
   always @(posedge clk or negedge rst_x) begin
     if (rst_x == 1'b0) begin
       latch_cnt_r <= 1'b0;
     end
     else begin
-      if (stn_fpframe & stn_fpline_r & fpdat_latch_en) 
+      if (fpline_rst_en) 
         latch_cnt_r <= 1'b0;
       else begin
         if (fpdat_latch_en) latch_cnt_r <= ~latch_cnt_r;
@@ -106,6 +120,25 @@ module stn_td (
     end
   end  
 
+
+  always @(posedge clk or negedge rst_x) begin
+    if (rst_x == 1'b0) begin
+      stn_hcnt_r[6:0] <= 7'h00;
+    end
+    else begin
+      if (fpline_rst_en) 
+        stn_hcnt_r[6:0] <= 7'h00;
+      else begin
+        if (stn_hcnt_en) stn_hcnt_r[6:0] <= stn_hcnt_r[6:0] + 7'h01;
+      end
+    end
+  end  
+
+  assign stn_hcnt_start = (stn_hcnt_r[6:0] >= 7'h00)? 1'b1 : 1'b0;
+  assign stn_hcnt_end   = (stn_hcnt_r[6:0] <= 7'h50)? 1'b1 : 1'b0;
+
+  assign stn_hdp = stn_hcnt_start & stn_hcnt_end;
+
 // ----- FIFO write signals ---------------------------------------------
   always @(posedge clk or negedge rst_x) begin
     if (rst_x == 1'b0) begin
@@ -114,7 +147,7 @@ module stn_td (
     else begin
       if (fifo_wrack) 
         wrreq_r <= 1'b0;
-      else if (fpdat_latch_en & latch_cnt_r)
+      else if (fpdat_latch_en & latch_cnt_r & stn_hdp)
         wrreq_r <= 1'b1;
     end
   end
@@ -125,13 +158,11 @@ module stn_td (
       stn_tst_r <= 1'b0;
     end
     else begin
-      if (wrreq_r & fifo_wrack) begin
-        if (stn_fpframe & stn_fpline_r)
-            waddr_r[12:0] <= 13'h0028;
-        else begin
-          if (waddr_r[12:0] == 13'h12bf) waddr_r[12:0] <= 13'h0000;
-          else waddr_r[12:0] <= waddr_r[12:0] + 13'h0001;   
-        end
+      if (stn_fpframe & fpline_rst_en)
+        waddr_r[12:0] <= 13'h0028;
+      else if (wrreq_r & fifo_wrack) begin
+        if (waddr_r[12:0] == 13'h12bf) waddr_r[12:0] <= 13'h0000;
+        else waddr_r[12:0] <= waddr_r[12:0] + 13'h0001;
       end
     end
   end

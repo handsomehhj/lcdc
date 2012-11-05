@@ -180,7 +180,7 @@ module stn2tft_top (
 
 
   DCM_SP #(.CLKFX_DIVIDE   ( 5      ), 
-           .CLKFX_MULTIPLY ( 6      ), 
+           .CLKFX_MULTIPLY ( 5      ), 
            .CLK_FEEDBACK   ( "NONE" )) 
   A_DCM_SP (
     .RST      ( ~rst_x ),  
@@ -234,9 +234,9 @@ module stn2tft_top (
 );
 
 
-  assign P_TST0 = tst[0];
-  assign P_TST1 = tst[1];  
-  assign P_TST2 = tst[2];
+  assign P_TST0 = stn_fpframe;
+  assign P_TST1 = stn_fpline;  
+  assign P_TST2 = stn_fpshift;
   assign P_TST3 = tst[3];
 
 
