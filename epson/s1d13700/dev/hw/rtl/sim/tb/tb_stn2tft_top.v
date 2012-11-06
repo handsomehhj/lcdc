@@ -207,7 +207,7 @@ initial begin
     A_HOST.DAT_WR(8'h55);
     A_HOST.DAT_WR(8'h55);
     A_HOST.DAT_WR(8'h55);
-    A_HOST.DAT_WR(8'h58);
+    A_HOST.DAT_WR(8'h48);
     A_HOST.DAT_WR(8'h55);
     A_HOST.DAT_WR(8'h55);
 
