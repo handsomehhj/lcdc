@@ -259,7 +259,7 @@
       (Type "COrSchematicDoc")
       (Frame
         (Placement "44 2 3 -1 -1 -8 -30 50 1131 50 363")
-        (Scroll "1234 733")
+        (Scroll "1234 274")
         (Zoom "148")
         (Occurrence "/"))
       (Path "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\BRD\SCH\S1D13700.DSN")
