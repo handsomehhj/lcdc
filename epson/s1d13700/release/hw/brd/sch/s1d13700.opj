@@ -1,0 +1,299 @@
+(ExpressProject "hv5s"
+  (ProjectVersion "19981106")
+  (ProjectType "PCB")
+  (Folder "Design Resources"
+    (Folder "Library"
+      (File "..\lib\sch\s1d13700.olb"
+        (Type "Schematic Library")))
+    (NoModify)
+    (BuildFileAddedOrDeleted "x")
+    (CompileFileAddedOrDeleted "x")
+    (ANNOTATE_Scope "0")
+    (ANNOTATE_Mode "1")
+    (ANNOTATE_Action "3")
+    (Annotate_Page_Order "0")
+    (ANNOTATE_Reset_References_to_1 "FALSE")
+    (ANNOTATE_No_Page_Number_Change "FALSE")
+    (ANNOTATE_Property_Combine "{Value}{Source Package}{POWER_GROUP}")
+    (ANNOTATE_IncludeNonPrimitive "FALSE")
+    (ANNOTATE_Refdes_Control_Required "FALSE")
+    (Annotate_type "Default")
+    (width_pages "100")
+    (width_start "80")
+    (width_End "80")
+    (IREFViewOutput "0")
+    (Netlist_TAB "0")
+    (OTHER_Part_Value "{Value}")
+    (OTHER_Netlist_File "HV5S.NET")
+    (OTHER_Netlist_File2 "HV5S.CMP")
+    (OTHER_View_Output "FALSE")
+    (OTHER_View_Output2 "FALSE")
+    (OTHER_Formatter "orpads2k.dll")
+    (OTHER_PCB_Footprint "{PCB Footprint}")
+    (OTHER_Switch0 "FALSE")
+    (OTHER_Switch1 "FALSE")
+    (OTHER_Switch2 "FALSE")
+    (OTHER_Switch3 "FALSE")
+    (OTHER_Switch4 "FALSE")
+    (OTHER_Switch5 "FALSE")
+    (OTHER_Switch6 "FALSE")
+    (DRC_Scope "0")
+    (DRC_Action "0")
+    (DRC_Create_Warnings "FALSE")
+    (DRC_View_Output "FALSE")
+    (DRC_Run_Electrical_Rules "TRUE")
+    (DRC_Run_Physical_Rules "FALSE")
+    (DRC_Report_File "D:\WORK\PROJECTS\TOUCH\LTS\ABON\TRUNK\HW\SCH\HV5S.DRC")
+    (DRC_Check_Ports "FALSE")
+    (DRC_Check_Off-Page_Connectors "TRUE")
+    (DRC_Report_Ports_and_Off-page_Connectors "FALSE")
+    (DRC_SDT_Compatibility "FALSE")
+    (DRC_Report_Off-grid_Objects "FALSE")
+    (DRC_Check_Unconnected_Nets "TRUE")
+    (DRC_Check_for_Misleading_TAP "FALSE")
+    (DRC_Report_Netnames "FALSE")
+    (DRC_Check_Single_Node_Nets "TRUE")
+    (DRC_Check_No_Driving_Source "TRUE")
+    (DRC_Check_Duplicate_NetNames "TRUE")
+    (DRC_Check_Floating_Pins "TRUE")
+    (DRC_Check_Physical_Power_Pins_Visibility "TRUE")
+    (DRC_Check_PCB_Footprint_Property "TRUE")
+    (DRC_Check_Normal_Convert_View_Sync "TRUE")
+    (DRC_Check_Incorrect_PinGroup_Assignment "TRUE")
+    (DRC_Check_High_Speed_Props_Syntax "TRUE")
+    (DRC_Check_Missing_Pin_Numbers "TRUE")
+    (DRC_Check_Device_With_No_Pins "TRUE")
+    (DRC_Check_Power_Ground_Short "TRUE")
+    (DRC_Identical_References "TRUE")
+    (DRC_Type_Mismatch "TRUE")
+    (DRC_Visible_Power_pins "FALSE")
+    (DRC_Report_Unused_Part_Packages "TRUE")
+    (DRC_Check_Name_Prop_For_HierBlocks "TRUE")
+    ("Create Allegro Netlist" "TRUE")
+    ("Allegro Netlist Directory"
+       "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\NET")
+    ("View Allegro Netlist Files" "FALSE")
+    ("Update Allegro Board" "FALSE")
+    ("Allegro Netlist Output Board File" "allegro\hv5s.brd")
+    ("Allegro Netlist Remove Etch" "FALSE")
+    ("Allegro Netlist Place Changed Component" "ALWAYS_REPLACE")
+    ("Allegro Netlist Open Board in Allegro" "ALLEGRO")
+    ("Allegro Setup Configuration File"
+       "C:\Cadence\SPB_16.3\tools\capture\allegro.cfg")
+    ("Allegro Setup Backup Versions" "3")
+    ("Allegro Setup Output Warnings" "TRUE")
+    ("Allegro Setup Ignore Constraints" "FALSE")
+    ("Allegro Setup Part Type Length" "31")
+    ("Allegro Netlist Combine Property String" "PCB Footprint")
+    ("Allegro Netlist Ignore Fixed Property" "FALSE")
+    ("Allegro Netlist User Defined Property" "FALSE")
+    (BOM_Scope "0")
+    (BOM_Mode "0")
+    (BOM_Report_File "D:\work\projects\lcdc\epson\s1d13700\dev\hw\sch\lcdc.BOM")
+    (BOM_Merge_Include "FALSE")
+    (BOM_Property_Combine_7.0 "{Item}\t{Quantity}\t{Reference}\t{Value}")
+    (BOM_Header "Item\tQuantity\tReference\tPart")
+    (BOM_Include_File "D:\WORK\PROJECTS\TOUCH\LTS\ABON\TRUNK\HW\SCH\HV5S.INC")
+    (BOM_Include_File_Combine_7.0 "{Item}\t{Quantity}\t{Reference}\t{Value}")
+    (BOM_One_Part_Per_Line "FALSE")
+    (Open_BOM_in_Excel "TRUE")
+    (BOM_View_Output "FALSE")
+    (File ".\s1d13700.dsn"
+      (Type "Schematic Design"))
+    (IREFReportFile
+       "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\SCH\S1D13700.csv")
+    (Board_sim_option "VHDL_flow"))
+  (Folder "Outputs"
+    (File ".\s1d13700.csv"
+      (Type "Report"))
+    (File ".\lcdc.bom"
+      (Type "Report"))
+    (File
+       "d:\work\projects\touch\customer\tma\jushen\htc140\dev\hw\net\pstxnet.dat"
+      (Type "Report")
+      (DisplayName "pstxnet.dat"))
+    (File
+       "d:\work\projects\touch\customer\tma\jushen\htc140\dev\hw\net\pstxprt.dat"
+      (Type "Report")
+      (DisplayName "pstxprt.dat"))
+    (File
+       "d:\work\projects\touch\customer\tma\jushen\htc140\dev\hw\net\pstchip.dat"
+      (Type "Report")
+      (DisplayName "pstchip.dat"))
+    (File "..\net\pstxnet.dat"
+      (Type "Report")
+      (DisplayName "pstxnet.dat"))
+    (File "..\net\pstxprt.dat"
+      (Type "Report")
+      (DisplayName "pstxprt.dat"))
+    (File "..\net\pstchip.dat"
+      (Type "Report")
+      (DisplayName "pstchip.dat")))
+  (Folder "Referenced Projects")
+  (PartMRUSelector
+    (TP
+      (FullPartName "TP.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (MBR0530T1G
+      (FullPartName "MBR0530T1G.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (INDUCTOR
+      (FullPartName "INDUCTOR.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (SP1072
+      (FullPartName "SP1072.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (CON6
+      (FullPartName "CON6.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (HEADER8X2
+      (FullPartName "HEADER8X2.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (LED
+      (FullPartName "LED.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (SST25VF010
+      (FullPartName "SST25VF010.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (XC3S50A-4VQG100C
+      (FullPartName "XC3S50A-4VQG100CA.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (HEADER7X2
+      (FullPartName "HEADER7X2.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (SW4
+      (FullPartName "SW4.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (RES1
+      (FullPartName "RES1.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (CON18
+      (FullPartName "CON18.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (CAP
+      (FullPartName "CAP.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (OFFPAGELEFT-R
+      (LibraryName "C:\CADENCE\SPB_16.3\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (OFFPAGELEFT-L
+      (LibraryName "C:\CADENCE\SPB_16.3\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (TLV70012
+      (FullPartName "TLV70012.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (TM057KDH01
+      (FullPartName "TM057KDH01.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (TitleBlock0
+      (LibraryName "C:\CADENCE\SPB_16.3\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (SG8002
+      (FullPartName "SG8002.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (LM1117-3.3V
+      (FullPartName "LM1117-3.3V.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0"))
+    (GND_SIGNAL
+      (LibraryName "C:\CADENCE\SPB_16.3\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    ("GND_FIELD SIGNAL"
+      (LibraryName "C:\CADENCE\SPB_16.3\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (VCC_BAR
+      (LibraryName "C:\CADENCE\SPB_16.3\TOOLS\CAPTURE\LIBRARY\CAPSYM.OLB")
+      (DeviceIndex "0"))
+    (SN74AC245
+      (FullPartName "SN74AC245.Normal")
+      (LibraryName
+         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\LIB\SCH\S1D13700.OLB")
+      (DeviceIndex "0")))
+  (GlobalState
+    (FileView
+      (Path "Design Resources")
+      (Path "Design Resources" "Library")
+      (Path "Outputs"))
+    (HierarchyView)
+    (Doc
+      (Type "COrCapturePMDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 0 361 0 455"))
+      (Tab 0))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 2 3 -1 -1 -8 -30 50 1131 50 363")
+        (Scroll "1234 274")
+        (Zoom "148")
+        (Occurrence "/"))
+      (Path "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\BRD\SCH\S1D13700.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "P3_FPGA"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 50 1139 50 367")
+        (Scroll "10 121")
+        (Zoom "74")
+        (Occurrence "/"))
+      (Path "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\BRD\SCH\S1D13700.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "P2_LCDC"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 75 1164 75 392")
+        (Scroll "-215 0")
+        (Zoom "37")
+        (Occurrence "/"))
+      (Path "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\BRD\SCH\S1D13700.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "P1_HOST"))
+    (Doc
+      (Type "COrSchematicDoc")
+      (Frame
+        (Placement "44 0 1 -1 -1 -8 -30 100 1189 100 417")
+        (Scroll "0 711")
+        (Zoom "100")
+        (Occurrence "/"))
+      (Path "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\BRD\SCH\S1D13700.DSN")
+      (Schematic "SCHEMATIC1")
+      (Page "P4_DISP")))
+  (MPSSessionName "handsome")
+  (ISPCBBASICLICENSE "false"))
