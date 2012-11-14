@@ -149,13 +149,14 @@ initial begin
     #(`CYCLE * 100);
     @(posedge clk);
     A_HOST.CMD_WR(8'h40);
-    A_HOST.DAT_WR(8'h01);
-    A_HOST.DAT_WR(8'h02);
-    A_HOST.DAT_WR(8'h03);
-    A_HOST.DAT_WR(8'h04);
+    A_HOST.DAT_WR(8'h30);
+    A_HOST.DAT_WR(8'h87);
+    A_HOST.DAT_WR(8'h07);
+    A_HOST.DAT_WR(8'h27);
     A_HOST.DAT_WR(8'h48);
-    A_HOST.DAT_WR(8'h05);
-    A_HOST.DAT_WR(8'h06);
+    A_HOST.DAT_WR(8'hef);
+    A_HOST.DAT_WR(8'h40);
+    A_HOST.DAT_WR(8'h00);
 
     A_HOST.CMD_WR(8'h42);
     A_HOST.DAT_WR(8'h22);

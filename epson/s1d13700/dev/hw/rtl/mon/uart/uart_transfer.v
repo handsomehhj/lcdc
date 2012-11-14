@@ -222,14 +222,14 @@ module uart_transfer (
   endfunction
 
 
-  assign uart_ack = (uart_req & (uart_sta_r[5:0] == IDLE))? 1'b1 : 1'b0;
+  assign uart_ack = ((uart_sta_r[5:0] == BIT31) & uart_tm_ov)? 1'b1 : 1'b0;
 
 // ----- Shift Register ---------------------------------------------
   always @(posedge clk or negedge rst_x) begin
     if (rst_x == 1'b0)
       uart_shift_r[33:0] <= 34'hf_ffff_ffff;
     else begin
-      if (uart_req & uart_ack) 
+      if (uart_req & (uart_sta_r[5:0] == IDLE))
         uart_shift_r[33:0] <= {3'b111, 6'h00, uart_dat[17:16], 1'b0,
                                2'b11, uart_dat[15:8], 1'b0,
                                2'b11, uart_dat[7:0], 1'b0};

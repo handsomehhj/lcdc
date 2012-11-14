@@ -41,7 +41,8 @@ module uart_timer (
 //      Logic description
 //==========================================================================
 
-  assign uart_tm_ov = (tm_cnt_r[7:0] == 8'h86)? 1'b1 : 1'b0;
+//  assign uart_tm_ov = (tm_cnt_r[7:0] == 8'h86)? 1'b1 : 1'b0;
+  assign uart_tm_ov = (tm_cnt_r[7:0] == 8'he2)? 1'b1 : 1'b0;
 
 // ----- BAUD Rate Timer --------------------------------------------
   always @(posedge clk or negedge rst_x) begin

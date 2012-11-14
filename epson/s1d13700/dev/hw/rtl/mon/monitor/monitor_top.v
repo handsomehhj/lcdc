@@ -27,6 +27,7 @@ module monitor_top (
   P_FPSHIFT, P_FPLINE, P_FPFRAME,  
   P_SOUT,
 
+  P_STANDBY,
   P_TST0, P_TST1, P_TST2
 );
 
@@ -57,6 +58,8 @@ module monitor_top (
 
   output  P_SOUT;                     //       Serial output
 
+  output  P_STANDBY;                  // LOW   OSC standby
+  
   output  P_TST0;
   output  P_TST1;
   output  P_TST2;
@@ -115,6 +118,7 @@ module monitor_top (
   assign P_TST1 = stn_fpline;  
   assign P_TST2 = stn_fpshift;
 
+  assign P_STANDBY = 1'b1;
 
 endmodule
 

@@ -41,8 +41,8 @@ module ram_2kbx18 (
     .CLK   ( clk        ), 
     .SSR   ( 1'b0       ),
 
-    .EN    ( ~ce        ),
-    .WE    ( ~we        ),
+    .EN    ( ce         ),
+    .WE    ( we         ),
     .ADDR  ( addr[10:0] ), 
 
     .DI    ( di[7:0]    ), 
@@ -55,8 +55,8 @@ module ram_2kbx18 (
     .CLK   ( clk        ), 
     .SSR   ( 1'b0       ),
 
-    .EN    ( ~ce        ),
-    .WE    ( ~we        ),
+    .EN    ( ce         ),
+    .WE    ( we         ),
     .ADDR  ( addr[10:0] ), 
 
     .DI    ( di[16:9]   ), 
