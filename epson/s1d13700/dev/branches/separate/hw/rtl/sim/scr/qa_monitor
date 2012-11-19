@@ -1,0 +1,21 @@
+#!/bin/bash
+# ==========================================================================
+# Subversion Control:
+# $Revision$
+# $Date$
+# ==========================================================================
+# File     : qa_monitor
+# Author   : Handsome Huang
+# Abstract : Simulation running script
+#
+# ==========================================================================
+# Modification History:
+# Date        By          Change Description
+# ---------------------------------------------------------------------
+# 2012/11/07  Handsome    New creation.
+#
+# ==========================================================================
+#./run_sim.pl -m mon -t tb_mon_top -c 50000 -p 50_000 -w sscan -d typ 
+./run_sim.pl -m mon -t tb_mon_top -c 50000 -p 38_462 -w sscan -d typ 
+
+

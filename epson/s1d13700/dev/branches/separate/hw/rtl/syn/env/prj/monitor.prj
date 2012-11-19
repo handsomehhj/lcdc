@@ -1,0 +1,38 @@
+#!/bin/bash
+# ==========================================================================
+# Subversion Control:
+# $Revision$
+# $Date$
+# ==========================================================================
+#
+# File     : stn2tft_top.v
+# Author   : Handsome Huang
+# Abstract : STN2TFT FPGA project
+#
+# ==========================================================================
+# Modification History:
+# Date          By           Changes Description
+# ----------------------------------------------------------------------
+# 2012/09/01    Handsome     New creation
+#
+# ==========================================================================
+
+# Define the directory
+SRC_DIR=../../../mon
+
+# Test-bench & verilog options
+cat  << END
+verilog work $SRC_DIR/monitor/monitor_top.v
+verilog work $SRC_DIR/monitor/logic_top_monitor.v
+verilog work $SRC_DIR/monitor/logic_sub_monitor.v
+verilog work $SRC_DIR/host/host_if.v
+verilog work $SRC_DIR/fifo/fifo.v
+verilog work $SRC_DIR/ram/ram_2kbx18.v
+verilog work $SRC_DIR/uart/uart_top.v
+verilog work $SRC_DIR/uart/uart_if.v
+verilog work $SRC_DIR/uart/uart_timer.v
+verilog work $SRC_DIR/uart/uart_transfer.v
+
+
+END
+
