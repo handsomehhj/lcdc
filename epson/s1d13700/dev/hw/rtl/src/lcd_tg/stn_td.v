@@ -55,10 +55,11 @@ module stn_td (
   wire        fpdat_latch_en;
   wire        stn_hcnt_en;
 
-
   wire        stn_hcnt_start;
   wire        stn_hcnt_end;
   wire        stn_hdp;
+ 
+  wire [6:0]  stn_hcnt_i;
 
   reg  [6:0]  stn_hcnt_r;
 
@@ -120,6 +121,7 @@ module stn_td (
     end
   end  
 
+  assign stn_hcnt_i[6:0] = stn_hcnt_r[6:0] + 7'h01;
 
   always @(posedge clk or negedge rst_x) begin
     if (rst_x == 1'b0) begin
@@ -129,7 +131,7 @@ module stn_td (
       if (fpline_rst_en) 
         stn_hcnt_r[6:0] <= 7'h00;
       else begin
-        if (stn_hcnt_en) stn_hcnt_r[6:0] <= stn_hcnt_r[6:0] + 7'h01;
+        if (stn_hcnt_en) stn_hcnt_r[6:0] <= stn_hcnt_i[6:0];
       end
     end
   end  
@@ -158,8 +160,12 @@ module stn_td (
       stn_tst_r <= 1'b0;
     end
     else begin
-      if (stn_fpframe & fpline_rst_en)
-        waddr_r[12:0] <= 13'h0028;
+      if (fpline_rst_en) begin
+        if (stn_fpframe) 
+          waddr_r[12:0] <= 13'h0028;
+        else if (stn_hcnt_r[6:0] < 7'h50) 
+          waddr_r[12:0] <= waddr_r[12:0] - {7'h00, stn_hcnt_i[6:1]};
+      end
       else if (wrreq_r & fifo_wrack) begin
         if (waddr_r[12:0] == 13'h12bf) waddr_r[12:0] <= 13'h0000;
         else waddr_r[12:0] <= waddr_r[12:0] + 13'h0001;

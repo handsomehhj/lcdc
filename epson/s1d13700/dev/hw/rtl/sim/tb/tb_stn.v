@@ -82,7 +82,8 @@ module stn (
   wire [3:0]  pcnt_cnf;
 
   wire        hcnt_en;
-  wire        hcnt_ov;
+  wire        hcnt_ov1;
+  wire        hcnt_ov2;
   wire        hcnt_hdp;
 
   wire        vcnt_en;
@@ -92,7 +93,8 @@ module stn (
 
   wire [7:0]  reg_tcr;
   wire [7:0]  hdp_start;
-  wire [7:0]  hdp_end;
+  wire [7:0]  hdp_end1;
+  wire [7:0]  hdp_end2;
 
 
   reg  [3:0]  pcnt_r;
@@ -115,7 +117,7 @@ module stn (
   assign cnf[0] = P_CNF0;
   
 // ----- VSYNC counter --------------------------------------------------
-  assign vcnt_en = hcnt_en & hcnt_ov;   
+  assign vcnt_en = hcnt_en & hcnt_ov2;   
   assign vcnt_ov = (vcnt_r[7:0] == 8'hef)? 1'b1 : 1'b0;
 
   always @(posedge clk or negedge rst_x) begin
@@ -144,12 +146,14 @@ module stn (
   
 // ----- HSYNC counter --------------------------------------------------
   assign hdp_start[7:0] = (reg_tcr[7:0] - 8'h30 + 8'h01) * 2;
-  assign hdp_end[7:0]   = (reg_tcr[7:0] * 2) + 8'h01;
+  assign hdp_end1[7:0]  = (reg_tcr[7:0] * 2) + 8'h01;
+  assign hdp_end2[7:0]  = (reg_tcr[7:0] * 2) + 8'h01 + 8'h10;
 
   assign hcnt_en  = pcnt_en & pcnt_ov;
-  assign hcnt_ov  = (hcnt_r[7:0] == hdp_end[7:0])? 1'b1 : 1'b0;
+  assign hcnt_ov1 = (hcnt_r[7:0] == hdp_end1[7:0])? 1'b1 : 1'b0;
+  assign hcnt_ov2 = (hcnt_r[7:0] == hdp_end2[7:0])? 1'b1 : 1'b0;
   assign hcnt_hdp = ((hcnt_r[7:0] >= hdp_start[7:0]) & 
-                     (hcnt_r[7:0] <= hdp_end[7:0])) ? 1'b1 : 1'b0; 
+                     (hcnt_r[7:0] <= hdp_end2[7:0])) ? 1'b1 : 1'b0; 
 //  assign hcnt_ov  = (hcnt_r[7:0] == 8'h69)? 1'b1 : 1'b0;
 //  assign hcnt_hdp = ((hcnt_r[7:0] >= 8'h1a) & 
 //                     (hcnt_r[7:0] <= 8'h69)) ? 1'b1 : 1'b0; 
@@ -161,8 +165,8 @@ module stn (
     end
     else begin
       if (hcnt_en) begin
-        if (hcnt_ov) hcnt_r[7:0] <= 8'h00;
-        else         hcnt_r[7:0] <= hcnt_r[7:0] + 8'h01;
+        if (hcnt_ov2) hcnt_r[7:0] <= 8'h00;
+        else          hcnt_r[7:0] <= hcnt_r[7:0] + 8'h01;
       end
     end
   end
@@ -172,7 +176,7 @@ module stn (
       line_r <= 1'b0;
     end
     else begin
-      if (hcnt_en) line_r <= hcnt_ov;
+      if (hcnt_en) line_r <= (hcnt_ov1 | hcnt_ov2);
     end
   end
 
