@@ -80,6 +80,7 @@ module host_if (
   reg  [7:0]  wdata_r;
   reg         rwmem_r;
   reg  [13:0] rwmem_cnt_r;
+  reg         mon_cmd_r;
 
 //==========================================================================
 //      Logic description
@@ -130,10 +131,17 @@ module host_if (
   assign rd_dat = (bus_sta_r[1:0] == SETUP) & ~ce_x & ~rd_x & a0;
 
   always @(posedge clk or negedge rst_x) begin
-    if (rst_x == 1'b0) 
+    if (rst_x == 1'b0) begin
       reg_cmd_r[7:0] <= 8'h00;
+      mon_cmd_r      <= 1'b0;
+    end
     else begin
-      if (wr_cmd) reg_cmd_r[7:0] <= dat[7:0];
+      if (wr_cmd) begin
+        reg_cmd_r[7:0] <= dat[7:0];
+
+        if (dat[7:0] == 8'h40) mon_cmd_r <= 1'b1;
+        else                   mon_cmd_r <= 1'b0;
+      end    
     end
   end
 
@@ -199,10 +207,11 @@ module host_if (
     if (rst_x == 1'b0) 
       wrreq_r <= 1'b0;
     else begin
-      if (wrreq_r & wrack) 
+      if (wrreq & wrack) 
         wrreq_r <= 1'b0;
       else begin 
-        if (wr_cmd | wr_dat | rd_dat) wrreq_r <= 1'b1;
+        if ((wr_cmd & (dat[7:0] == 8'h40)) | (wr_dat & mon_cmd_r))
+          wrreq_r <= 1'b1;
       end  
     end
   end
@@ -211,7 +220,7 @@ module host_if (
     if (rst_x == 1'b0) 
       rwmem_r <= 1'b0;
     else begin
-      if (wrreq_r & wrack) begin
+      if (wrreq & wrack) begin
         if (bus_cmd_r[3:0] == WCMD) 
           rwmem_r <= 1'b0;
         else if ((bus_cmd_r[3:0] == WMEM) | (bus_cmd_r[3:0] == RMEM))
@@ -245,7 +254,7 @@ module host_if (
     if (rst_x == 1'b0) 
       waddr_r[10:0] <= 11'h000;
     else begin
-      if (wrreq_r & wrack) waddr_r[10:0] <= waddr_i[10:0];
+      if (wrreq & wrack) waddr_r[10:0] <= waddr_i[10:0];
     end
   end
   
@@ -257,7 +266,7 @@ module host_if (
     if (rst_x == 1'b0) 
       rwmem_cnt_r[13:0] <= 14'h0000;
     else begin
-      if (wrreq_r & wrack) begin
+      if (wrreq & wrack) begin
         if ((bus_cmd_r[3:0] == WMEM) | (bus_cmd_r[3:0] == RMEM))
           rwmem_cnt_r[13:0] <= rwmem_cnt_r[13:0] + 14'h0001;
         else

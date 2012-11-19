@@ -227,7 +227,7 @@ module uart_transfer (
 // ----- Shift Register ---------------------------------------------
   always @(posedge clk or negedge rst_x) begin
     if (rst_x == 1'b0)
-      uart_shift_r[33:0] <= 34'hf_ffff_ffff;
+      uart_shift_r[33:0] <= 34'h3_ffff_ffff;
     else begin
       if (uart_req & (uart_sta_r[5:0] == IDLE))
         uart_shift_r[33:0] <= {3'b111, 6'h00, uart_dat[17:16], 1'b0,
