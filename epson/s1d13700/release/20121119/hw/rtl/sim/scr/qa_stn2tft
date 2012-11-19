@@ -1,0 +1,21 @@
+#!/bin/bash
+# ==========================================================================
+# Subversion Control:
+# $Revision$
+# $Date$
+# ==========================================================================
+# File     : qa_stn2tft
+# Author   : Handsome Huang
+# Abstract : Simulation running script
+#
+# ==========================================================================
+# Modification History:
+# Date        By          Change Description
+# ---------------------------------------------------------------------
+# 2012/09/08  Handsome    New creation.
+#
+# ==========================================================================
+./run_sim.pl -m rtl -t tb_stn2tft_top -c 1200000 -p 39_000 -w sscan -d typ 
+#./run_sim.pl -m rtl -t tb_stn2tft_top -c 1200 -p 39_000 -w sscan -d typ 
+
+
