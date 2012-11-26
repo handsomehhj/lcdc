@@ -136,6 +136,7 @@ module logic_sub_stn2tft (
     .reg_tcr     ( reg_tcr[7:0]     ),    
 
     .stn_fpframe ( stn_fpframe      ),
+    .stn_fpline  ( stn_fpline       ),
 
     .fifo_rdreq  ( fifo_rdreq       ),  
     .fifo_rdack  ( fifo_rdack       ),
