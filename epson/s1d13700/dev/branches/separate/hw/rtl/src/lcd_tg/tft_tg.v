@@ -373,12 +373,12 @@ module tft_tg (
   assign tft_g[1] = data_r[7] ? 1'b1: 1'b0;
   assign tft_g[0] = data_r[7] ? 1'b1: 1'b0;
 
-  assign tft_b[5] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_b[4] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_b[3] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_b[2] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_b[1] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_b[0] = data_r[7] ? 1'b1: 1'b0;
+  assign tft_b[5] = data_r[7] ? 1'b0: 1'b0;
+  assign tft_b[4] = data_r[7] ? 1'b0: 1'b0;
+  assign tft_b[3] = data_r[7] ? 1'b0: 1'b0;
+  assign tft_b[2] = data_r[7] ? 1'b0: 1'b0;
+  assign tft_b[1] = data_r[7] ? 1'b0: 1'b0;
+  assign tft_b[0] = data_r[7] ? 1'b0: 1'b0;
 
 
 

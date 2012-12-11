@@ -64,7 +64,10 @@ module stn_td (
   wire        stn_hdp;
  
   wire [6:0]  stn_hcnt_i;
+  wire        stn_disable_en;
   wire        stn_disable_i;
+  wire [15:0] stn_ramdis_i;
+
 
 
   reg  [6:0]  stn_hcnt_r;
@@ -81,6 +84,9 @@ module stn_td (
   reg  [7:0]  wdata_r;
   reg  [12:0] waddr_fifo_r;
   reg  [12:0] waddr_ram_r;
+
+  reg  [15:0] stn_ramdis_p;
+  reg  [15:0] stn_ramdis_r;
 
   reg         stn_disable_r;
 
@@ -233,13 +239,80 @@ module stn_td (
 
 //  assign fifo_wrreq = wrreq_r & (~(stn_disable_r | stn_disable_i));
   assign fifo_wrreq = wrreq_r;
-  assign fifo_waddr[12:0] = stn_fifo_en ? waddr_fifo_r[12:0] 
-                                        : waddr_ram_r[12:0];
+  assign fifo_waddr[12:0] = 
+    ((stn_ramdis_i[0] | stn_ramdis_r[0]) |
+     (stn_ramdis_i[1] | stn_ramdis_r[1]))? 13'h17c0
+                                         : (stn_fifo_en ? waddr_fifo_r[12:0] 
+                                                        : waddr_ram_r[12:0]);
 
   assign fifo_wdata[7:0]  = wdata_r[7:0];
-  assign stn_disable_i = (((fifo_waddr[12:0] == 13'h156b) | (fifo_waddr[12:0] == 13'h1593)) &&
-                          (fifo_wdata[7]    == 1'b1)     && 
-                          (wrreq_r          == 1'b1))? 1'b1 : 1'b0;
+
+
+  assign stn_disable_i = 1'b0;
+//  assign stn_disable_i = (((fifo_waddr[12:0] == 13'h156b) | 
+//                           (fifo_waddr[12:0] == 13'h1593)) &&
+//                          (fifo_wdata[7]    == 1'b1)     && 
+//                          (wrreq_r          == 1'b1))? 1'b1 : 1'b0;
+
+
+  always @(posedge clk or negedge rst_x) begin
+    if (rst_x == 1'b0) begin
+      stn_ramdis_p[0] <= 1'b0;
+      stn_ramdis_p[1] <= 1'b0;
+    end
+    else begin
+      if (~stn_fifo_en & wrreq_r & fifo_wrack) begin
+        if ((waddr_ram_r[12:0] == 13'h156a) && (wdata_r[7:0] == 8'h00))
+          stn_ramdis_p[0] <= 1'b1;
+        else
+          stn_ramdis_p[0] <= 1'b0;  
+
+        if ((waddr_ram_r[12:0] == 13'h1592) && (wdata_r[7:0] == 8'h00))
+          stn_ramdis_p[1] <= 1'b1;
+        else
+          stn_ramdis_p[1] <= 1'b0;  
+
+      end
+    end
+  end
+
+  assign stn_ramdis_i[0] = ((stn_ramdis_p[0] == 1'b1) && 
+                            (waddr_ram_r[12:0] == 13'h156b) && 
+                            (wdata_r[7] == 1'b1))? 1'b1 : 1'b0;
+
+  assign stn_ramdis_i[1] = ((stn_ramdis_p[1] == 1'b1) && 
+                            (waddr_ram_r[12:0] == 13'h1593) && 
+                            (wdata_r[7] == 1'b1))? 1'b1 : 1'b0;
+
+  always @(posedge clk or negedge rst_x) begin
+    if (rst_x == 1'b0) begin
+      stn_ramdis_r[0] <= 1'b0;
+      stn_ramdis_r[1] <= 1'b0;
+    end
+    else begin
+      if (waddr_ram_r[12:0] == 13'h1572) stn_ramdis_r[0] <= 1'b0;
+      else begin 
+        if (stn_ramdis_i[0]) stn_ramdis_r[0] <= 1'b1;
+      end
+
+      if (waddr_ram_r[12:0] == 13'h17be) stn_ramdis_r[1] <= 1'b0;
+      else begin 
+        if (stn_ramdis_i[1]) stn_ramdis_r[1] <= 1'b1;
+      end
+
+
+
+    end
+  end
+
+
+
+
+
+
+
+  assign stn_disable_en = (fifo_waddr[12:0] == 13'h156b);
+
 
   always @(posedge clk or negedge rst_x) begin
     if (rst_x == 1'b0) begin
