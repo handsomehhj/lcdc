@@ -35,8 +35,11 @@ module stn2tft_top (
   P_B5, P_B4, P_B3, P_B2, P_B1, P_B0,
 
   P_RL, P_UD,
+  P_COLOR_S0, P_COLOR_S1, P_COLOR_S2,
 
-  P_TST0, P_TST1, P_TST2, P_TST3,
+
+
+  P_TST0, P_TST1, P_TST2, 
 
 
   P_STANDBY
@@ -99,10 +102,14 @@ module stn2tft_top (
   output  P_RL;                       //       RL setting
   output  P_UD;                       //       UD setting
 
+  input   P_COLOR_S0;                 //       Color selecting bit 0
+  input   P_COLOR_S1;                 //       Color selecting bit 1
+  input   P_COLOR_S2;                 //       Color selecting bit 2
+
+
   output  P_TST0;
   output  P_TST1;
   output  P_TST2;
-  output  P_TST3;
 
   output  P_STANDBY;
 
@@ -129,6 +136,7 @@ module stn2tft_top (
   wire [5:0]  tft_g;
   wire [5:0]  tft_b;
 
+  wire [2:0]  color_sel;
   wire [3:0]  tst;
 
 //==========================================================================
@@ -177,7 +185,8 @@ module stn2tft_top (
   assign P_B1 = tft_b[1];
   assign P_B0 = tft_b[0];
 
-
+// Color select
+  assign color_sel[2:0] = {P_COLOR_S2, P_COLOR_S1, P_COLOR_S0};
 
   DCM_SP #(.CLKFX_DIVIDE   ( 5      ), 
            .CLKFX_MULTIPLY ( 5      ), 
@@ -230,6 +239,8 @@ module stn2tft_top (
     .tft_g       ( tft_g[5:0]     ), 
     .tft_b       ( tft_b[5:0]     ),
 
+    .color_sel   ( color_sel[2:0] ),
+
     .tst         ( tst[3:0]       )
 );
 
@@ -237,7 +248,6 @@ module stn2tft_top (
   assign P_TST0 = stn_fpframe;
   assign P_TST1 = stn_fpline;  
   assign P_TST2 = stn_fpshift;
-  assign P_TST3 = tst[3];
 
 
 

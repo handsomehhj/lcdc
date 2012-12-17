@@ -26,6 +26,8 @@ module tft_tg (
   fifo_raddr,
   fifo_rdata,
 
+  color_sel,
+
   tft_vsync, tft_hsync, tft_dotclk, 
   tft_enable,
   tft_r, tft_g, tft_b
@@ -41,15 +43,15 @@ module tft_tg (
 
   input  [7:0]  reg_tcr;         //       Total Character Bytes Per Row
 
-
-
   input         stn_fpframe;     // High  STN panel frame
   input         stn_fpline;      // High  STN panel line
 
-  output        fifo_rdreq;     // High   FIFO read request
-  input         fifo_rdack;     // High   FIFO read ack
+  output        fifo_rdreq;      // High  FIFO read request
+  input         fifo_rdack;      // High  FIFO read ack
   output [12:0] fifo_raddr;
   input  [7:0]  fifo_rdata;
+
+  input  [2:0]  color_sel;       //       TFT color select 
 
   output        tft_vsync;       // Low   TFT panel VSYNC
   output        tft_hsync;       // Low   TFT panel HSYNC
@@ -81,6 +83,10 @@ module tft_tg (
   wire        vdp, hdp;
 
   wire        fifo_ren;
+
+  wire [17:0] fore_color;
+  wire [17:0] back_color;
+
 
   reg  [2:0]  stn_frame_r;
   reg  [2:0]  stn_line_r;
@@ -351,38 +357,61 @@ module tft_tg (
 
     end
   end
+
+
+
+// Color select
+  assign fore_color[17:0] = FC_FORE_COLOR(color_sel[2:0]);
+  assign back_color[17:0] = FC_BACK_COLOR(color_sel[2:0]);
+
+  // Function body
+  function[17:0] FC_FORE_COLOR;
+    input [2:0]  fc_color_sel;
+    begin
+      case (fc_color_sel[2:0]) // synopsys parallel_case
+      // ------------------------------------------------------------
+        3'b000: FC_FORE_COLOR[17:0] = {6'b00_0000, 6'b00_0000, 6'b11_1111}; 
+        3'b001: FC_FORE_COLOR[17:0] = {6'b11_1111, 6'b11_0000, 6'b00_0000}; 
+        3'b010: FC_FORE_COLOR[17:0] = {6'b11_1111, 6'b11_1111, 6'b11_1111}; 
+        3'b011: FC_FORE_COLOR[17:0] = {6'b11_1111, 6'b00_0000, 6'b00_0000}; 
+        3'b100: FC_FORE_COLOR[17:0] = {6'b11_1111, 6'b11_1111, 6'b11_1111}; 
+        3'b101: FC_FORE_COLOR[17:0] = {6'b11_1111, 6'b11_1111, 6'b00_0000}; 
+        3'b110: FC_FORE_COLOR[17:0] = {6'b00_0000, 6'b00_0000, 6'b11_1111};
+        3'b111: FC_FORE_COLOR[17:0] = {6'b11_1111, 6'b00_0000, 6'b00_0000}; 
+        default: FC_FORE_COLOR[17:0] = {6'b00_0000, 6'b00_0000, 6'b00_0000};
+      endcase
+    end
+  endfunction
   
+  // Function body
+  function[17:0] FC_BACK_COLOR;
+    input [2:0]  fc_color_sel;
+    begin
+      case (fc_color_sel[2:0]) // synopsys parallel_case
+      // ------------------------------------------------------------
+        3'b000: FC_BACK_COLOR[17:0] = {6'b00_0000, 6'b00_0000, 6'b00_0000}; 
+        3'b001: FC_BACK_COLOR[17:0] = {6'b00_0000, 6'b00_0000, 6'b00_0000};
+        3'b010: FC_BACK_COLOR[17:0] = {6'b00_0000, 6'b00_0000, 6'b00_0000};
+        3'b011: FC_BACK_COLOR[17:0] = {6'b00_0000, 6'b00_0000, 6'b00_0000};
+        3'b100: FC_BACK_COLOR[17:0] = {6'b00_0000, 6'b00_0000, 6'b11_1111};
+        3'b101: FC_BACK_COLOR[17:0] = {6'b11_0010, 6'b11_0010, 6'b11_0000}; 
+        3'b110: FC_BACK_COLOR[17:0] = {6'b11_0010, 6'b11_0010, 6'b11_0000}; 
+        3'b111: FC_BACK_COLOR[17:0] = {6'b11_0010, 6'b11_0010, 6'b11_0000};
+        default: FC_BACK_COLOR[17:0] = {6'b00_0000, 6'b00_0000, 6'b00_0000};
+      endcase
+    end
+  endfunction
+
+
 // Output signal
   assign tft_vsync  = vsync_r;
   assign tft_hsync  = hsync_r;
   assign tft_dotclk = hcnt_th_r ? ~pcnt_r: ~mcnt_r[2];
   assign tft_enable = de_r[1];
 
-
-  assign tft_r[5] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_r[4] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_r[3] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_r[2] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_r[1] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_r[0] = data_r[7] ? 1'b1: 1'b0;
-
-  assign tft_g[5] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_g[4] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_g[3] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_g[2] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_g[1] = data_r[7] ? 1'b1: 1'b0;
-  assign tft_g[0] = data_r[7] ? 1'b1: 1'b0;
-
-  assign tft_b[5] = data_r[7] ? 1'b0: 1'b0;
-  assign tft_b[4] = data_r[7] ? 1'b0: 1'b0;
-  assign tft_b[3] = data_r[7] ? 1'b0: 1'b0;
-  assign tft_b[2] = data_r[7] ? 1'b0: 1'b0;
-  assign tft_b[1] = data_r[7] ? 1'b0: 1'b0;
-  assign tft_b[0] = data_r[7] ? 1'b0: 1'b0;
-
-
-
-
+  assign tft_r[5:0] = data_r[7] ? fore_color[17:12] : back_color[17:12];
+  assign tft_g[5:0] = data_r[7] ? fore_color[11:6]  : back_color[11:6];
+  assign tft_b[5:0] = data_r[7] ? fore_color[5:0]   : back_color[5:0];
 
 
 
