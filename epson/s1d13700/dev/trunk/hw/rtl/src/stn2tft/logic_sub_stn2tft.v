@@ -35,6 +35,8 @@ module logic_sub_stn2tft (
   tft_enable,
   tft_r, tft_g, tft_b,
 
+  color_sel,
+
   ram_ce, ram_we,
   ram_addr,
   ram_wdata, ram_rdata,
@@ -60,6 +62,8 @@ module logic_sub_stn2tft (
   input         stn_fpshift;     //       STN panel shift clock
   input  [3:0]  stn_fpdat;       //       STN panel data
   
+  input  [2:0]  color_sel;       //       TFT panel color select
+
   output        tft_vsync;       // Low   TFT panel VSYNC
   output        tft_hsync;       // Low   TFT panel HSYNC
   output        tft_dotclk;      //       TFT panel dot clock 
@@ -136,11 +140,14 @@ module logic_sub_stn2tft (
     .reg_tcr     ( reg_tcr[7:0]     ),    
 
     .stn_fpframe ( stn_fpframe      ),
+    .stn_fpline  ( stn_fpline       ),
 
     .fifo_rdreq  ( fifo_rdreq       ),  
     .fifo_rdack  ( fifo_rdack       ),
     .fifo_raddr  ( fifo_raddr[12:0] ),
     .fifo_rdata  ( fifo_rdata[7:0]  ),
+
+    .color_sel   ( color_sel[2:0]   ),
 
     .tft_vsync   ( tft_vsync        ), 
     .tft_hsync   ( tft_hsync        ),

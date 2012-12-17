@@ -36,6 +36,8 @@ module logic_top_stn2tft (
   tft_enable,
   tft_r, tft_g, tft_b,
 
+  color_sel,
+
   tst
 
 );
@@ -65,6 +67,8 @@ module logic_top_stn2tft (
   output [5:0]  tft_r;           //       TFT panel R data
   output [5:0]  tft_g;           //       TFT panel G data
   output [5:0]  tft_b;           //       TFT panel B data
+
+  input  [2:0]  color_sel;       //       TFT color select
 
   output [3:0]  tst;
 
@@ -101,6 +105,8 @@ module logic_top_stn2tft (
     .tft_r       ( tft_r[5:0]     ), 
     .tft_g       ( tft_g[5:0]     ), 
     .tft_b       ( tft_b[5:0]     ),
+
+    .color_sel   ( color_sel[2:0] ),
 
     .ram_ce      ( ram_ce         ),
     .ram_we      ( ram_we         ),
