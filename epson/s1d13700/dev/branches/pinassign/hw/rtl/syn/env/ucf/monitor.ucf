@@ -1,0 +1,42 @@
+# ==========================================================================
+# Subversion Control:
+# $Revision$
+# $Date$
+# ==========================================================================
+#
+# File     : monitor_top.v
+# Author   : Handsome Huang
+# Abstract : Monitor FPGA pin assignment
+#
+# ==========================================================================
+# Modification History:
+# Date          By           Changes Description
+# ----------------------------------------------------------------------
+# 2012/11/10    Handsome     New creation
+#
+# ==========================================================================
+  NET P_RST_X       LOC = P73;
+  NET P_MCLKI       LOC = P83;
+
+  NET P_CE_X        LOC = P70;
+  NET P_A0          LOC = P68;
+  NET P_WR_X        LOC = P71;
+  NET P_RD_X        LOC = P72;
+
+  NET P_D7          LOC = P61;
+  NET P_D6          LOC = P60;
+  NET P_D5          LOC = P56;
+  NET P_D4          LOC = P57;
+  NET P_D3          LOC = P59;
+  NET P_D2          LOC = P62;
+  NET P_D1          LOC = P64;
+  NET P_D0          LOC = P65;
+
+  NET P_TST0        LOC = P46;
+  NET P_TST1        LOC = P53;
+  NET P_TST2        LOC = P51;
+
+  NET P_SOUT        LOC = P20;
+  NET P_STANDBY     LOC = P40;
+
+
