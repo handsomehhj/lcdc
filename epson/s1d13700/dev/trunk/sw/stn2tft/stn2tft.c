@@ -42,7 +42,7 @@ void LCDC_initial(void)
     LCDC_SetOverlay(0x0c);
 
     LCDC_DisplayOnOff(0x00);
-    LCDC_SetCursorMode(0x0603);
+    LCDC_SetCursorMode(0x8604);
 
     LCDC_SetAddress(0x0234);
 
@@ -83,7 +83,7 @@ void LCDC_SystemSet(unsigned short xRes, unsigned short yRes)
     LCD_WDAT(0x87);              /* REG[0x01]                         */
     LCD_WDAT(0x07);              /* REG[0x02]                         */
     LCD_WDAT(charPerLine-1);     /* REG[0x03] -- C/R = 320/8-1 = 0x27 */
-    LCD_WDAT(charPerLine+12);    /* REG[0x04] -- TC/R >= C/R + 2      */
+    LCD_WDAT(charPerLine+32);    /* REG[0x04] -- TC/R >= C/R + 2      */
     LCD_WDAT(linePerFrame-1);    /* REG[0x05] -- L/F = 240 - 1        */
     LCD_WDAT(charPerLine);       /* REG[0x06] -- AFL = 320/8          */
     LCD_WDAT(0x00);              /* REG[0x07] -- AFH = 00             */
@@ -151,31 +151,6 @@ void LCDC_HDotScroll(unsigned char scrollPixel)
 }
 
 /**************************************************************************
-* Function Name: void LCDC_CSForm(unsigned char crx, unsigned char cry,
-*                                 unsigned char type)
-***************************************************************************
-* Summary:
-*   Set the cursor format.
-*
-* Parameters:
-*   void
-*
-* Return:
-*   void
-**************************************************************************/
-void LCDC_CSForm(unsigned char crx, unsigned char cry, unsigned char type)
-{
-    cry |= (type & 0x01)<<8;
-
-	LCD_WCMD(0x5d);                              /* CSFORM command   */
-    LCD_WDAT(crx & 0x0f);
-    LCD_WDAT(cry & 0x8f);
-}
-
-
-
-
-/**************************************************************************
 * Function Name: void LCDC_SetOverlay(unsigned char mode)
 ***************************************************************************
 * Summary:
@@ -210,12 +185,12 @@ void LCDC_DisplayOnOff(unsigned char displayOn)
     if (displayOn == 0)
     {
         LCD_WCMD(0x58);                           /* Scroll command   */
-        LCD_WDAT(0x00);                           /* Display off      */
+        LCD_WDAT(0x04);                           /* Display off      */
     }
     else
     {
         LCD_WCMD(0x59);                           /* Scroll command   */
-        LCD_WDAT(0x04);                           /* Display on       */
+        LCD_WDAT(0x14);                           /* Display on       */
     }
 
 }
@@ -316,8 +291,6 @@ void LCDC_WriteDisplayRam(unsigned short addr, unsigned short len,
 
 	/* Set start address */
     LCDC_SetAddress(addr);
-    for (i=0; i<100; i++)
-    	asm("nop");
 
     LCD_WCMD(0x42);
 

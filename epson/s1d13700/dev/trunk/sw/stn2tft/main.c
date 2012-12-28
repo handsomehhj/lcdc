@@ -51,19 +51,18 @@
 **************************************************************************/
 int main(void)
 {
-    unsigned int i, j, t, l;
+    unsigned int i;
     unsigned char buf[40];
 
-/* Waiting for FPGA downloading */
-    for (i=0; i<10000; i++)
-    {
-        for(j=0; j<10; j++)
-        {
-            asm("nop");
-        }
-    }
+ //   unsigned short testData;
 
-    LCDC_initial();
+ //   *(volatile unsigned short *)0x900000 = 0x55aa;
+ //   *(volatile unsigned short *)0x900002 = 0x1234;
+ //   *(volatile unsigned short *)0x900002 = 0x4567;
+
+ //   testData = *(volatile unsigned short *)0x900000;
+
+	LCDC_initial();
 
     for (i=0; i<40; i++)
     {
@@ -80,7 +79,10 @@ int main(void)
         LCDC_WriteDisplayRam((i*40), 40, buf);
     }
 
-    buf[0] = 0x01;
+    for (i=0; i<40; i++)
+    {
+        buf[i] = 0xff;
+    }
 
 //    for (i=118; i<119; i++)
 //    {
@@ -89,49 +91,10 @@ int main(void)
 
 
 //    LCDC_WriteDisplayRam(0x257f, 1, buf);
+
+
+    LCDC_WriteDisplayRam(0, 40*240, (unsigned char *)bmpData);
     LCDC_DisplayOnOff(0x01);
-
-//    for (i=0; i<8; i++)
-//	{
-
-    LCDC_WriteDisplayRam(0, 39, buf);
-    LCDC_WriteDisplayRam(80, 39, buf);
-
-//    LCDC_DisplayOnOff(0x01);
-
-//    LCDC_WriteDisplayRam(160, 40, buf);
-//    LCDC_WriteDisplayRam(240, 40, buf);
-
-    	//	}
-
-
-//    LCDC_WriteDisplayRam(1, 39, buf);
-//    LCDC_WriteDisplayRam(81, 39, buf);
-
-
-//    LCDC_WriteDisplayRam(0, 40*240, (unsigned char *)bmpData);
-
-    while(1);
-
-    for(l=0; l<1; l++)
-    {
-//    	for (i=0; i<40; i++)
-    	for (i=0; i<1; i++)
-    	{
-    		for(j=0; j<8; j++)
-    		{
-    			buf[i] |= (unsigned char )0x1<<j;
-    			LCDC_WriteDisplayRam(0, 40, buf);
-        		for(t=0; t<0xff0;t++)
-        			asm("nop");
-
-    			buf[i]=0x0;
-    		}
-    		for(t=0; t<0xfff0;t++)
-    			asm("nop");
-    	}
-    }
-
 
     while(1);
 }

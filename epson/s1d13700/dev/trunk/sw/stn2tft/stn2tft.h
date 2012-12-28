@@ -30,15 +30,6 @@
                        asm("nop");                                \
                        asm("nop");                                \
                        asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
                        asm("nop")
 
 #define LCD_RDAT       *(volatile unsigned char *)0x00d00001;     \
@@ -63,15 +54,6 @@
                        asm("nop");                                \
                        asm("nop");                                \
                        asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
-                       asm("nop");                                \
                        asm("nop")
 
 
@@ -83,7 +65,6 @@ void LCDC_Scroll(unsigned short layer1StartAddress,
                  unsigned short layer3StartAddress,
                  unsigned short yRes);
 void LCDC_HDotScroll(unsigned char scrollPixel);
-void LCDC_CSForm(unsigned char crx, unsigned char cry, unsigned char type);
 void LCDC_SetOverlay(unsigned char mode);
 void LCDC_DisplayOnOff(unsigned char displayOn);
 void LCDC_SetAddress(unsigned short address);

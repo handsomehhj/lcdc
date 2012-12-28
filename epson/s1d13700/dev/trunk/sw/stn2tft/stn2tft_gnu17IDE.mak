@@ -46,9 +46,9 @@ vpath %.c
 vpath %.s 
 
 # macro definitions for object files
-OBJS= main.o \
-      stn2tft.o \
+OBJS= stn2tft.o \
       vector.o \
+      main.o \
       
 # macro definitions for library files
 OBJLDS= $(TOOL_DIR)/lib/24bit/libstdio.a \
@@ -57,9 +57,9 @@ OBJLDS= $(TOOL_DIR)/lib/24bit/libstdio.a \
         $(TOOL_DIR)/lib/24bit/libc.a \
         
 # macro definitions for assembly files generated from c source files
-CEXTTEMPS= main.ext0 \
-      stn2tft.ext0 \
+CEXTTEMPS= stn2tft.ext0 \
       vector.ext0 \
+      main.ext0 \
       
 
 # macro definitions for dependency files
@@ -140,12 +140,6 @@ endif
 
 	@cmd /c "echo ---------------- Finished building target : $@ ----------------"
 
-## main.c
-main.o : main.c main.ext0
-	$(CC) $(CFLAGS) -o $(@:%.o=%.ext0) $<
-	$(AS_CC) $(ASFLAGS_CC) -o $@ $(@:%.o=%.ext0) 
-	$(DEPCMD_CC)
-
 ## stn2tft.c
 stn2tft.o : stn2tft.c stn2tft.ext0
 	$(CC) $(CFLAGS) -o $(@:%.o=%.ext0) $<
@@ -158,11 +152,17 @@ vector.o : vector.c vector.ext0
 	$(AS_CC) $(ASFLAGS_CC) -o $@ $(@:%.o=%.ext0) 
 	$(DEPCMD_CC)
 
+## main.c
+main.o : main.c main.ext0
+	$(CC) $(CFLAGS) -o $(@:%.o=%.ext0) $<
+	$(AS_CC) $(ASFLAGS_CC) -o $@ $(@:%.o=%.ext0) 
+	$(DEPCMD_CC)
+
 
 # dependecies for assembled c source files
-main.ext0 : main.c
 stn2tft.ext0 : stn2tft.c
 vector.ext0 : vector.c
+main.ext0 : main.c
 
 # include dependency files
 -include $(DEPS)
