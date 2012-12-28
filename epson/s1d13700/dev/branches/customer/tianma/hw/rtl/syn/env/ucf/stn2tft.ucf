@@ -43,7 +43,7 @@
   NET P_DCLK        LOC = P77;
   NET P_HSYNC       LOC = P78;
   NET P_VSYNC       LOC = P44;
-  NET P_DEN         LOC = P13;
+  NET P_DEN         LOC = P16;
 
   NET P_R5          LOC = P90;
   NET P_R4          LOC = P89;
@@ -52,10 +52,10 @@
   NET P_R1          LOC = P85;
   NET P_R0          LOC = P84;
   
-  NET P_G5          LOC = P10;
-  NET P_G4          LOC = P16;
-  NET P_G3          LOC = P6;
-  NET P_G2          LOC = P15;
+  NET P_G5          LOC = P12;
+  NET P_G4          LOC = P10;
+  NET P_G3          LOC = P9;
+  NET P_G2          LOC = P6;
   NET P_G1          LOC = P5;
   NET P_G0          LOC = P4;
   
@@ -63,10 +63,10 @@
   NET P_B4          LOC = P98;
   NET P_B3          LOC = P94;
   NET P_B2          LOC = P93;
-  NET P_B1          LOC = P19;
-  NET P_B0          LOC = P9;
+  NET P_B1          LOC = P15;
+  NET P_B0          LOC = P13;
 
-  NET P_RL          LOC = P12;
+  NET P_RL          LOC = P19;
   NET P_UD          LOC = P3;
 
 
