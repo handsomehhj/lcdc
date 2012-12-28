@@ -1,0 +1,249 @@
+#!/bin/bash
+# ==========================================================================
+# Subversion Control:
+# $Revision$
+# $Date$
+# ==========================================================================
+#
+# File     : run_syn
+# Author   : Handsome Huang
+# Abstract : FPGA synthesis script
+#
+# ==========================================================================
+# Modification History:
+# Date          By           Changes Description
+# ----------------------------------------------------------------------
+# 2012/09/01    Handsome     New creation
+#
+# ==========================================================================
+
+#---------------------------------------------------------------------
+# check script arguments
+#---------------------------------------------------------------------
+PRJ="no";
+TRG="no";
+MOD="syn";
+BOM="xc3s50-vq100-4"; 
+COD="no";
+
+while [ $# -ne 0 ]
+do
+  if [ $1 == "-prj" ]; 
+  then
+    shift; PRJ=$1;
+  fi
+ 
+  if [ $1 == "-mod" ]; 
+  then
+    shift; MOD=$1;
+  fi 
+
+  if [ $1 == "-trg" ]; 
+  then
+    shift; TRG=$1;
+  fi
+
+  if [ $1 == "-bom" ]; 
+  then
+    shift; BOM=$1;
+  fi
+
+  if [ $1 == "-cod" ]; 
+  then
+    shift; COD=$1;
+  fi
+  shift;
+done
+
+#---------------------------------------------------------------------
+# show usage
+#---------------------------------------------------------------------
+
+if ([ $PRJ == "no" ] || [ $TRG == "no" ]); then
+  cat << END
+$0: run verilog simulation
+Usage : $0 [option] <ret>
+ 
+  Option :
+    -prj                   : Project file name, no suffix.
+    -trg                   : Traget file name.
+    -mod [syn]             : Type is syn/imp/par.
+    -bom [xc2vp40-fg676-5] : FPGA parts.
+
+Example:
+  $ run_syn -prj s1c17803 -trg s1c17803  <ret>
+or
+  $ run_syn -prj s1c17803 -trg s1c17803 -mod imp  <ret>
+or
+  $ run_syn -prj s1c17803 -trg s1c17803 -mod imp -bom xc2vp40-fg676-5 <ret>
+
+END
+  exit
+fi
+
+#---------------------------------------------------------------------
+# Built enviroment
+#---------------------------------------------------------------------
+SYN_DIR=$TRG;
+PRJ_DIR="../../env/prj"
+OPT_DIR="../../env/opt"
+UCF_DIR="../../env/ucf"
+NET_DIR="../../net"
+COD_DIR="../../../cod"
+COD2ROM="../../../bin/cod2rom.pl"
+
+SYN_OPT="$OPT_DIR/xst.opt"
+IMP_OPT="$OPT_DIR/imple.opt"
+BGN_OPT="$OPT_DIR/bitgen.opt"
+SIM_OPT="$OPT_DIR/nc_verilog.opt"
+
+#SRC_DIR="../../../rtl"
+
+#WRK_DIR="../run"
+
+
+if  [ ! -d ../run ]; then
+  mkdir ../run;
+fi
+ 
+cd ../run
+
+if  [ ! -d $NET_DIR ]; then
+  mkdir $NET_DIR;
+fi
+
+if [ ! -e ./$PRJ ]; then
+  mkdir $PRJ 
+fi
+
+cd ./$PRJ
+rm -rf *
+
+## Tool Definition
+PROMGEN="promgen"
+XFLOW="xflow"
+
+case "$MOD" in
+  syn)
+    chmod +x $PRJ_DIR/$PRJ.prj
+    $PRJ_DIR/$PRJ.prj > $TRG.prj
+    $XFLOW -p $BOM -synth $SYN_OPT $TRG.prj
+    cp $TRG.ngc $NET_DIR/$TRG.ngc
+    ;;
+  sim)
+    chmod +x $PRJ_DIR/$PRJ.prj
+    $PRJ_DIR/$PRJ.prj > $TRG.prj
+
+    cp $UCF_DIR/$PRJ.ucf $TRG.ucf
+    $XFLOW -p $BOM -synth $SYN_OPT -implement $IMP_OPT -tsim $SIM_OPT -config $BGN_OPT $TRG.prj
+    ;;
+#  par)
+#    $CD $WRK_DIR
+#     $CP $NET_$NET_FILE ./
+#    $CP $PRJ_DIR/ucf/$1.ucf $WRK_DIR/$TARGET.ucf
+#    $XFLOW -implement $IMP_OPT -config $BGN_OPT $NET_FILE
+#    $PROMGEN -u 0x0 $BIT_FILE -p mcs -w -x xcf32p -o $TARGET.mcs
+#    ;;
+  imp)
+    chmod +x $PRJ_DIR/$PRJ.prj
+    $PRJ_DIR/$PRJ.prj > $TRG.prj
+#    cp $COD_DIR/rom.cod ./
+#    $COD2ROM --cod=rom.cod
+    cp $UCF_DIR/$PRJ.ucf $TRG.ucf
+    $XFLOW -p $BOM -synth $SYN_OPT -implement $IMP_OPT -config $BGN_OPT $TRG.prj
+    echo "$PROMGEN -spi -u 0x0 $TRG.bit -p mcs -w -o $TRG.mcs"
+    $PROMGEN -spi -p mcs -o $TRG.mcs -s 128 -u 0x0 $TRG.bit
+    ;;
+esac
+
+
+
+
+
+
+
+
+
+
+
+## Target Definition
+#TARGET="s1c33s03"
+#PART="xc2vp40-fg676-5"
+# 
+## Directory Definition
+# 
+#PRJ_FILE="$PRJ_DIR/$TARGET.prj"
+#NET_FILE="$WRK_DIR/$TARGET.ngc"
+#BIT_FILE="$WRK_DIR/$TARGET.bit"
+# 
+#SYN_OPT="$OPT_DIR/xst.opt"
+#IMP_OPT="$OPT_DIR/imple.opt"
+#BGN_OPT="$OPT_DIR/bitgen.opt"
+# 
+## Tool Definition
+#PROMGEN="promgen"
+#XFLOW="xflow"
+#CD="cd"
+#CP="cp"
+#RM="rm -f"
+
+# 
+#while [ $# -gt 1 ]; do
+#  case "$2" in
+#    -synth)
+#      $CD $WRK_DIR
+#      $CP $PRJ_DIR/$1.prj ./$TARGET.prj
+#      $XFLOW -p $PART -synth $SYN_OPT $TARGET.prj
+#      $CP $NET_FILE $NET_DIR/
+#      ;;
+#    -par)
+#      $CD $WRK_DIR
+##      $CP $NET_$NET_FILE ./
+#      $CP $PRJ_DIR/ucf/$1.ucf $WRK_DIR/$TARGET.ucf
+#      $XFLOW -implement $IMP_OPT -config $BGN_OPT $NET_FILE
+#      $PROMGEN -u 0x0 $BIT_FILE -p mcs -w -x xcf32p -o $TARGET.mcs
+#      ;;
+#    -imple)
+#      $CD $WRK_DIR
+#      $CP $PRJ_DIR/$1.prj ./$TARGET.prj
+#      $CP $PRJ_DIR/ucf/$1.ucf $WRK_DIR/$TARGET.ucf
+#      $XFLOW -p $PART -synth $SYN_OPT -implement $IMP_OPT -config $BGN_OPT $TARGET.prj
+#      $PROMGEN -u 0x0 $BIT_FILE -p mcs -w -x xcf32p -o $TARGET.mcs
+#      ;;
+#  esac
+#  shift
+#done
+
+
+#$XFLOW -p $PART -synth $SYN_OPT $PRJ_FILE
+#	$(CP) $(PRJ_DIR)/constraint/$(TARGET).ucf $(WRK_DIR) && \
+#$XFLOW -p $PART -implement $IMP_OPT -config $BGN_OPT $NET_FILE
+#$PROMGEN -u 0x0 $BIT_FILE -p mcs -w -x xcf32p -o $TARGET.mcs
+
+#
+#PHONY: all all-before all-after clean clean-custom
+#ll: all-before $(TARGET).pdf all-after
+#
+#lean: clean-custom
+#	$(CD) $(WRK_DIR) && \
+#	$(RM) $(REMOVE)
+#
+#ynth: $(PRJ_FILE) $(SRC_FILE)
+#	$(CD) $(WRK_DIR) && \
+#	$(XFLOW) -p $(PN) -synth $(SYN_OPT) $(PRJ_FILE)
+#
+#romgen: $(BIT_FILE)
+#	 $(PROMGEN) -u 0x0 $(BIT_FILE) -p mcs -w -x xcf32p -o $(TARGET).mcs
+#
+#(BIT_FILE): $(NET_FILE)
+#	$(CD) $(WRK_DIR) && \
+#	$(CP) $(PRJ_DIR)/constraint/$(TARGET).ucf $(WRK_DIR) && \
+#	$(XFLOW) -p $(PN) -implement $(IMP_OPT) -config $(BGN_OPT) $(NET_FILE)
+#
+#(NET_FILE): $(PRJ_FILE) $(SRC_FILE)
+#	$(CD) $(WRK_DIR) && \
+#	$(XFLOW) -p $(PN) -synth $(SYN_OPT) $(PRJ_FILE)
+
+
+
+
