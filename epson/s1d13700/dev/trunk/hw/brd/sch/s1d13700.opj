@@ -98,7 +98,7 @@
     (BOM_One_Part_Per_Line "FALSE")
     (Open_BOM_in_Excel "TRUE")
     (BOM_View_Output "FALSE")
-    (File ".\s1d13700.dsn"
+    (File "D:\S1D13700_lowversion.DSN"
       (Type "Schematic Design"))
     (IREFReportFile
        "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\HW\SCH\S1D13700.csv")
@@ -247,16 +247,11 @@
   (GlobalState
     (FileView
       (Path "Design Resources")
-      (Path "Design Resources"
-         "d:\work\projects\lcdc\epson\s1d13700\dev\trunk\hw\brd\sch\s1d13700.dsn")
-      (Path "Design Resources"
-         "d:\work\projects\lcdc\epson\s1d13700\dev\trunk\hw\brd\sch\s1d13700.dsn"
-         "SCHEMATIC1")
+      (Path "Design Resources" "D:\S1D13700_lowversion.DSN")
+      (Path "Design Resources" "D:\S1D13700_lowversion.DSN" "SCHEMATIC1")
       (Path "Design Resources" "Library")
       (Path "Outputs")
-      (Select "Design Resources"
-         "d:\work\projects\lcdc\epson\s1d13700\dev\trunk\hw\brd\sch\s1d13700.dsn"
-         "SCHEMATIC1" "P3_FPGA"))
+      (Select "Design Resources" "D:\S1D13700_lowversion.DSN"))
     (HierarchyView)
     (Doc
       (Type "COrCapturePMDoc")
@@ -270,8 +265,7 @@
         (Scroll "-103 0")
         (Zoom "50")
         (Occurrence "/"))
-      (Path
-         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\TRUNK\HW\BRD\SCH\S1D13700.DSN")
+      (Path "D:\S1D13700_LOWVERSION.DSN")
       (Schematic "SCHEMATIC1")
       (Page "P2_LCDC"))
     (Doc
@@ -281,8 +275,7 @@
         (Scroll "10 85")
         (Zoom "74")
         (Occurrence "/"))
-      (Path
-         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\TRUNK\HW\BRD\SCH\S1D13700.DSN")
+      (Path "D:\S1D13700_LOWVERSION.DSN")
       (Schematic "SCHEMATIC1")
       (Page "P3_FPGA"))
     (Doc
@@ -292,8 +285,7 @@
         (Scroll "662 210")
         (Zoom "148")
         (Occurrence "/"))
-      (Path
-         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\TRUNK\HW\BRD\SCH\S1D13700.DSN")
+      (Path "D:\S1D13700_LOWVERSION.DSN")
       (Schematic "SCHEMATIC1")
       (Page "P1_HOST"))
     (Doc
@@ -303,8 +295,7 @@
         (Scroll "71 1006")
         (Zoom "148")
         (Occurrence "/"))
-      (Path
-         "D:\WORK\PROJECTS\LCDC\EPSON\S1D13700\DEV\TRUNK\HW\BRD\SCH\S1D13700.DSN")
+      (Path "D:\S1D13700_LOWVERSION.DSN")
       (Schematic "SCHEMATIC1")
       (Page "P4_DISP")))
   (MPSSessionName "handsome")
