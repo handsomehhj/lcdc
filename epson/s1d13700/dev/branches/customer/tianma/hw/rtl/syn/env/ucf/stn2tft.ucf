@@ -69,12 +69,11 @@
   NET P_RL          LOC = P19;
   NET P_UD          LOC = P3;
 
-
-  NET P_STANDBY     LOC = P40;
-
   NET P_TST0        LOC = P46;
   NET P_TST1        LOC = P53;
   NET P_TST2        LOC = P51;
+
+  NET P_STANDBY     LOC = P40;
 
   NET P_COLOR_S0    LOC = P82;
   NET P_COLOR_S1    LOC = P97;
