@@ -50,6 +50,7 @@ void LCDC_initial(void)
 
     address = LCDC_GetAddress();
 
+    LCDC_SetAddress(address);
 
     delayUs(100);
 }

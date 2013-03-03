@@ -144,6 +144,10 @@ BOOL programHex(CHAR *pHexFile, INT appAddr)
         }
 
         printf("Row %x programming successful\n", (WORD)(addr>>7));
+        if (addr == 0xff80)
+        {
+            printf("Final row\n");
+        }
 
         addr+=128;
     }
@@ -184,7 +188,7 @@ BOOL programHex(CHAR *pHexFile, INT appAddr)
     addr = appAddr;
     p = &(sHexData.hexData[0]);
 
-    for(i=0; i<4; i++)
+    for(i=0; i<512; i++)
     {
         /* Encryption */
 //        seed = (BYTE)(i+1);
