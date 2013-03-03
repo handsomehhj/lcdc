@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?gnu17-eclipse version="2.0.2"?>
+
+<gnu17project>
+<general config="default" cpuName="S1C17" cpuType="STD" memoryModel="REGULAR" useCoproLib="false"/>
+<make>
+<makeSetting buildGoal="0" is2passBuild="true" makefile="stn2tft_gnu17IDE" name="stn2tft">
+<environments/>
+<compiler command="xgcc">
+<option name="gnu17compiler.knjfilt" value="false"/>
+<option name="gnu17compiler.optimizeLevel" value="1"/>
+<option name="gnu17compiler.includePath" value="$(TOOL_DIR)/include;"/>
+<option name="gnu17compiler.symbols" value=""/>
+<option name="gnu17compiler.noBuiltIn" value="true"/>
+<option name="gnu17compiler.userOps" value="-Wall -Werror-implicit-function-declaration "/>
+</compiler>
+<assembler command="xgcc">
+<option name="gnu17asm.userOpts" value=" "/>
+</assembler>
+<linker command="ld">
+<option name="gnu17ld.genMap" value="true"/>
+<option name="gnu17ld.noAlignCheck" value="true"/>
+<option name="gnu17ld.userOps" value="-T stn2tft_gnu17IDE.lds "/>
+<option name="gnu17ld.libraries" value="$(TOOL_DIR)/lib/24bit/libstdio.a;$(TOOL_DIR)/lib/24bit/libc.a;$(TOOL_DIR)/lib/24bit/libgcc.a;$(TOOL_DIR)/lib/24bit/libc.a;"/>
+</linker>
+<vecChecker command="vecChecker">
+<option name="gnu17VecChecker.on" value="false"/>
+<option name="gnu17VecChecker.misc" value="-t symtable.out -r raw.out"/>
+</vecChecker>
+</makeSetting>
+</make>
+<parameterMap>
+<parSetting name="stn2tft_gnu17IDE">
+<parComment></parComment>
+<parArea access="word" areaType="RAM" endAddr="ffffff" startAddr="0" useBE="false" waitRead="0" waitWrite="0">
+<comment>All Area</comment>
+</parArea>
+<parArea areaType="STACK" endAddr="fbf" startAddr="0">
+<comment>Stack area</comment>
+</parArea>
+</parSetting>
+</parameterMap>
+<linkerscript name="stn2tft_gnu17IDE" stackPointer="fc0">
+<sections>
+<section autoUpdate="true" fileAttribute=".bss" lmaEqualsVma="true" sectionName=".bss" vma="0">
+<object file="main.o"/>
+<object file="stn2tft.o"/>
+<object file="vector.o"/>
+<object file="$(TOOL_DIR)/lib/24bit/libstdio.a"/>
+<object file="$(TOOL_DIR)/lib/24bit/libc.a"/>
+<object file="$(TOOL_DIR)/lib/24bit/libgcc.a"/>
+<object file="$(TOOL_DIR)/lib/24bit/libc.a"/>
+</section>
+<section autoUpdate="true" fileAttribute=".data" lmaEqualsVma="false" lmaSectionName=".rodata" sectionName=".data" vmaSectionName=".bss">
+<object file="main.o"/>
+<object file="stn2tft.o"/>
+<object file="vector.o"/>
+<object file="$(TOOL_DIR)/lib/24bit/libstdio.a"/>
+<object file="$(TOOL_DIR)/lib/24bit/libc.a"/>
+<object file="$(TOOL_DIR)/lib/24bit/libgcc.a"/>
+<object file="$(TOOL_DIR)/lib/24bit/libc.a"/>
+</section>
+<section autoUpdate="false" fileAttribute=".rodata" lmaEqualsVma="true" sectionName=".vector" vma="20000">
+<object file="vector.o"/>
+</section>
+<section autoUpdate="true" fileAttribute=".text" lmaEqualsVma="true" sectionName=".text" vmaSectionName=".vector">
+<object file="main.o"/>
+<object file="stn2tft.o"/>
+<object file="vector.o"/>
+<object file="$(TOOL_DIR)/lib/24bit/libstdio.a"/>
+<object file="$(TOOL_DIR)/lib/24bit/libc.a"/>
+<object file="$(TOOL_DIR)/lib/24bit/libgcc.a"/>
+<object file="$(TOOL_DIR)/lib/24bit/libc.a"/>
+</section>
+<section autoUpdate="true" fileAttribute=".rodata" lmaEqualsVma="true" sectionName=".rodata" vmaSectionName=".text">
+<object file="main.o"/>
+<object file="stn2tft.o"/>
+<object file="$(TOOL_DIR)/lib/24bit/libstdio.a"/>
+<object file="$(TOOL_DIR)/lib/24bit/libc.a"/>
+<object file="$(TOOL_DIR)/lib/24bit/libgcc.a"/>
+<object file="$(TOOL_DIR)/lib/24bit/libc.a"/>
+</section>
+</sections>
+</linkerscript>
+<flashProtect>
+<protectSetting bitNum="0" prtAddrRead="0" prtAddrWrite="0" useAttribute="false" useProtect="false"/>
+</flashProtect>
+<runGDB name="stn2tft_gnu17IDE">
+<debugger type="ICDMini" useVectorAddr="true" vectorAddr="20000">
+<connection debugRamAddr="0" port="USB"/>
+</debugger>
+</runGDB>
+</gnu17project>
