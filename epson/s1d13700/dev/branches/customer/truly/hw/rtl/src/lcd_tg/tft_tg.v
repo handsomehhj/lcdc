@@ -80,6 +80,7 @@ module tft_tg (
   wire [9:0]  hcnt_hndp1;  
   wire [9:0]  hcnt_hndp2;
   wire        hcnt_th;
+  wire        vcnt_th;
   wire        vdp, hdp;
 
   wire        fifo_ren;
@@ -94,7 +95,7 @@ module tft_tg (
   reg  [9:0]  stn_hcnt_r;
 
   reg  [8:0]  vcnt_r;            // VSYNC counter 
-  reg  [9:0]  hcnt_r;            // HSYNC counter
+  reg  [10:0] hcnt_r;            // HSYNC counter
   reg         pcnt_r;            // PIXEL counter
   reg  [2:0]  mcnt_r;
   reg         hcnt_th_r;
@@ -104,7 +105,7 @@ module tft_tg (
   reg  [2:0]  scnt_r;            // Shifter counter
 
   reg         vsync_r;
-  reg         hsync_r;
+  reg  [1:0]  hsync_r;
   reg  [1:0]  de_r;
   reg  [1:0]  dclk_r;
   reg  [7:0]  data_r;
@@ -212,39 +213,42 @@ module tft_tg (
     end
   end
 
-  assign vdp = ((vcnt_r[8:0] > 9'h010) && 
-                (vcnt_r[8:0] < 9'h101)) ? 1'b1 : 1'b0;
+  assign vdp = ((vcnt_r[8:0] > 9'h012) && 
+                (vcnt_r[8:0] < 9'h103)) ? 1'b1 : 1'b0;
+
+  assign vcnt_th = (vcnt_r[8:0] < 9'h107)? 1'b0 : 1'b1; 
 
 // ----- HSYNC counter --------------------------------------------------
   assign hcnt_ov_fifo = stn_line_rst;
-  assign hcnt_ov_ram  = (hcnt_r[9:0] == reg_hsync[9:0])? 1'b1 : 1'b0;
+  assign hcnt_ov_ram  = (hcnt_r[10:0] == {1'b0, reg_hsync[9:0]})? 1'b1 : 1'b0;
   assign hcnt_ov      = stn_fifo_en ? hcnt_ov_fifo : hcnt_ov_ram;
 
   always @(posedge clk or negedge rst_x) begin
     if (rst_x == 1'b0) begin
-      hcnt_r[9:0] <= 10'h000;
+      hcnt_r[10:0] <= 11'h000;
     end
     else begin
       if (pcnt_en) begin  
-        if (hcnt_ov) hcnt_r[9:0] <= 10'h000;
-        else         hcnt_r[9:0] <= hcnt_r[9:0] + 10'h001;
+        if (hcnt_ov) hcnt_r[10:0] <= 11'h000;
+        else         hcnt_r[10:0] <= hcnt_r[10:0] + 11'h001;
       end
     end
   end
 
-  assign hcnt_th = (hcnt_r[9:0] < 10'h200)? 1'b1 : 1'b0; 
+  assign hcnt_th = (hcnt_r[10:0] < 11'h198)? 1'b1 : 1'b0; 
 
   always @(posedge clk or negedge rst_x) begin
     if (rst_x == 1'b0) begin
-      hsync_r <= 1'b1;
+      hsync_r[1:0] <= 2'b1;
     end
     else begin
-      if (pcnt_en) hsync_r <= ~hcnt_ov;  
+      if (pcnt_en) hsync_r[0] <= ~hcnt_ov;  
+      if (pcnt_en) hsync_r[1] <= hsync_r[0];  
     end
   end
 
-  assign hdp = ((hcnt_r[9:0] > 10'h043) &
-                (hcnt_r[9:0] < 10'h184)) ? 1'b1 : 1'b0;
+  assign hdp = ((hcnt_r[10:0] > 11'h043) &
+                (hcnt_r[10:0] < 11'h184)) ? 1'b1 : 1'b0;
  
 // ----- PIXEL counter --------------------------------------------------
   assign pcnt_en = pcnt_r;
@@ -273,7 +277,7 @@ module tft_tg (
     if (rst_x == 1'b0) 
       hcnt_th_r <= 1'b1;
     else
-      hcnt_th_r <= hcnt_th;
+      if (pcnt_en) hcnt_th_r <= hcnt_th;
   end
 
   always @(posedge clk or negedge rst_x) begin
@@ -405,8 +409,10 @@ module tft_tg (
 
 // Output signal
   assign tft_vsync  = vsync_r;
-  assign tft_hsync  = hsync_r;
-  assign tft_dotclk = hcnt_th_r ? ~pcnt_r: ~mcnt_r[2];
+  assign tft_hsync  = hsync_r[1] | vcnt_th;
+//  assign tft_hsync  = hsync_r[1];
+//  assign tft_dotclk = vcnt_th ? 1'b0 : (hcnt_th_r ? ~pcnt_r: 1'b0);
+  assign tft_dotclk = hcnt_th_r ? ~pcnt_r: 1'b0;
   assign tft_enable = de_r[1];
 
   assign tft_r[5:0] = data_r[7] ? fore_color[17:12] : back_color[17:12];

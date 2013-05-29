@@ -173,14 +173,7 @@ assign (pull0, pull1) P_SLV_SCL = p_slv_scl_r;
     .P_R3      (), 
     .P_R2      (), 
     .P_R1      (), 
-    .P_R0      (),
-  
-
-
-
-
-
-    .P_STANDBY ()
+    .P_R0      ()
 );
 
 

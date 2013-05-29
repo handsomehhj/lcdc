@@ -35,14 +35,8 @@ module stn2tft_top (
   P_B5, P_B4, P_B3, P_B2, P_B1, P_B0,
 
   P_RL, P_UD,
-  P_COLOR_S0, P_COLOR_S1, P_COLOR_S2,
+  P_COLOR_S0, P_COLOR_S1, P_COLOR_S2
 
-
-
-  P_TST0, P_TST1, P_TST2, 
-
-
-  P_STANDBY
 );
 
 //==========================================================================
@@ -106,12 +100,6 @@ module stn2tft_top (
   input   P_COLOR_S1;                 //       Color selecting bit 1
   input   P_COLOR_S2;                 //       Color selecting bit 2
 
-
-  output  P_TST0;
-  output  P_TST1;
-  output  P_TST2;
-
-  output  P_STANDBY;
 
 //====================================================================
 //      Regs & Wires
@@ -244,14 +232,6 @@ module stn2tft_top (
     .tst         ( tst[3:0]       )
 );
 
-
-  assign P_TST0 = stn_fpframe;
-  assign P_TST1 = stn_fpline;  
-  assign P_TST2 = stn_fpshift;
-
-
-
-  assign P_STANDBY = 1'b1;
 
 
   assign P_RL = 1'b0;
